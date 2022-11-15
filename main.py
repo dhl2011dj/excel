@@ -5,7 +5,7 @@
 import xlrd2
 import xlwt
 
-def fomart_number(num):
+def format_number(num):
     length = len(str(num))
     if 1 == length:
         sheet_name = '000' + str(num)
@@ -42,7 +42,7 @@ def parse_write_xlsx(start, end, begin_row_index, begin_col_index):
 
     data = {}  # 空字典
     for isheet in range(start, end + 1):
-        sheet_name = fomart_number(isheet)
+        sheet_name = format_number(isheet)
 
         if 0 != wb.sheet_names().count(sheet_name):
             print("$$$$$$$$$$$$$ 表单[", isheet, "]解析完成 $$$$$$$$$$$$$")
@@ -98,8 +98,23 @@ def parse_write_xlsx(start, end, begin_row_index, begin_col_index):
     out_xlsx = xlwt.Workbook()
     sheet = out_xlsx.add_sheet('data')
     # 写入最左侧一列
-    # for irow in range(0, 2000):
-    #     sheet.write(irow,0,'我最帅')
+    for irow in range(1, 2000+1):
+        sheet.write(irow, 0, "AUS"+format_number(irow))
+    for irow in range(2001, 4000 + 1):
+        sheet.write(irow, 0, "BRA" + format_number(irow-2000))
+    for irow in range(4001, 6000 + 1):
+        sheet.write(irow, 0, "CHN" + format_number(irow-4000))
+    for irow in range(6001, 8000 + 1):
+        sheet.write(irow, 0, "GBR" + format_number(irow-6000))
+    for irow in range(8001, 10000 + 1):
+        sheet.write(irow, 0, "IND" + format_number(irow-8000))
+    for irow in range(10001, 12035 + 1):
+        sheet.write(irow, 0, "JPN" + format_number(irow-10000))
+    for irow in range(12036, 14035 + 1):
+        sheet.write(irow, 0, "ZAF" + format_number(irow-12035))
+    for irow in range(14036, 16035 + 1):
+        sheet.write(irow, 0, "USA" + format_number(irow-14035))
+
 
     # 写入数据
     icol = 0
@@ -107,7 +122,7 @@ def parse_write_xlsx(start, end, begin_row_index, begin_col_index):
         sheet_write_data = data[sheet_write_keys]
         print("column = ", icol)
         icol += 1
-        sheet.write(0, icol, fomart_number(sheet_write_keys)+"号表单")
+        sheet.write(0, icol, format_number(sheet_write_keys) + "号表单")
         start_row = 1
         incremental = 0
         for country_write_name in sheet_write_data.keys():
